@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Descuento e Impuesto</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Cálculo de Descuento e Impuesto</h1>
+        <div class="form-group">
+            <label for="consumo">Ingrese el Monto del Consumo (S/.):</label>
+            <input type="number" id="consumo" class="form-control" placeholder="Monto del Consumo" min="0" step="0.01">
+        </div>
+        <button class="btn btn-primary" onclick="calcularPago()">Calcular</button>
+        <div id="resultado" class="mt-4"></div>
+    </div>
+
+    <script>
+        function calcularPago() {
+            const consumo = parseFloat(document.getElementById('consumo').value);
+            const resultado = document.getElementById('resultado');
+            resultado.innerHTML = ''; // Limpiar resultados previos
+
+            if (isNaN(consumo) || consumo < 0) {
+                resultado.innerHTML = '<div class="alert alert-danger">Por favor, ingresa un monto de consumo válido.</div>';
+                return;
+            }
+
+            let descuento;
+            if (consumo <= 100) {
+                descuento = consumo * 0.10; // 10% de descuento
+            } else {
+                descuento = consumo * 0.20; // 20% de descuento
+            }
+
+            const importeDespuesDescuento = consumo - descuento;
+            const impuesto = importeDespuesDescuento * 0.18; // 18% de impuesto
+            const importeFinal = importeDespuesDescuento + impuesto;
+
+            resultado.innerHTML = `
+                <div class="alert alert-success">
+                    Descuento: S/. ${descuento.toFixed(2)} <br>
+                    Impuesto: S/. ${impuesto.toFixed(2)} <br>
+                    Importe a Pagar: S/. ${importeFinal.toFixed(2)}
+                </div>`;
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
